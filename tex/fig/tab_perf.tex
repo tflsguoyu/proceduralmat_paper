@@ -1,27 +1,15 @@
 \begin{table}[t]
 	\centering
 	\caption{\label{fig:performance}
-		%\sz{Need to be updated if we used MALA.}
 		Performance statistics for our MCMC-based posterior sampling.
 		The numbers are collected using a workstation equipped with an Intel i7-6800K six-core CPU and an Nvidia GTX 1080 GPU.  %\protect\footnotemark.
 	}
-%	\begin{tabular}{l|c|c}
-%		\multirow{2}{*}{\textbf{Material}} & \multirow{2}{*}{\textbf{\# params}} & {\textbf{MCMC}}\\
-%		& & (1k iter.)\\
-%		\hline
-%		Bump    &  8 & 180 s\\
-%		Leather & 12 & 194 s\\
-%		Plaster & 11 & 190 s\\
-%		Flakes  & 13 & 187 s\\
-%		Metal   & 10 & 182 s\\
-%		Wood    & 23 & 290 s
-%	\end{tabular}
 	\addtolength{\tabcolsep}{-3pt}
-	\begin{tabular}{l|rrrrrr}
+	\begin{tabular}{c|cccccc}
 		\textbf{Material} & bump & leather & plaster & flakes & metal & wood\\
 		\hline
 		\textbf{\# params.} & 8 & 12 & 11 & 13 & 10 & 23\\
-		\textbf{MCMC} (1k iter.) & 180 s & 194 s & 190 s & 187 s & 182 s & 290 s
+		\textbf{MCMC} (1k iter.) & 180s & 194s & 190s & 187s & 182s & 290s
 	\end{tabular}
 \end{table}
 

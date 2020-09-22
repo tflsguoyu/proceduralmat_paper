@@ -115,14 +115,14 @@
 %\issue{7}     % the issue number of the publication
 %\pStartPage{1}      % set starting page
 
-\input{macros}
+\input{tex/macros}
 %-------------------------------------------------------------------------
 \begin{document}
- 	\input{teaser}
+ 	\input{tex/fig/teaser}
 	\maketitle
 	%-------------------------------------------------------------------------
 	\begin{abstract}
-		\input{abstract}
+		\input{tex/abstract}
 		%-------------------------------------------------------------------------
 		%  ACM CCS 1998
 		%  (see https://www.acm.org/publications/computing-classification-system/1998)
@@ -149,13 +149,13 @@
 		\printccsdesc 
 	\end{abstract}
 	%-------------------------------------------------------------------------
-	\input{intro}
-	\input{related}
-	\input{prelim}
-	\input{summary}
-	\input{param}
-	\input{result}
-	\input{conclusion}
+	\input{tex/intro}
+	\input{tex/related}
+	\input{tex/prelim}
+	\input{tex/summary}
+	\input{tex/param}
+	\input{tex/result}
+	\input{tex/conclusion}
 	%-------------------------------------------------------------------------
 	% bibtex
 	\bibliographystyle{eg-alpha-doi}

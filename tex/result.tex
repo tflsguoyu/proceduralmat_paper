@@ -1,12 +1,9 @@
-\input{result_scatter}
-
 \section{Material Models and Results}
 \label{sec:results}
 %
-%we present specific material models and parameter estimation results using our Bayesian inference framework with summary functions.
-We now demonstrate the effectiveness of our technique by fitting %six procedural material models---bumpy microfacet surface, brushed metal, metallic paint with flakes, leather, plaster, and wood---
-several procedural material models to a mix of synthetic and real target images.
-%We also show a translucent material in the supplementary material.
+\input{tex/fig/fig_scatter}
+
+We now demonstrate the effectiveness of our technique by fitting several procedural material models to a mix of synthetic and real target images.
 
 Our forward evaluation process uses collocated camera and light.
 This configuration closely matches a mobile phone camera with flash (which is used for most of the real target images) and simplifies some BRDF formulations (because the incoming, outgoing, and half-way vectors are all identical).
@@ -15,14 +12,9 @@ The knowledge of the camera field of view allows us to compute the physical scal
 Lastly, we treat light intensity and camera vignetting (expressed as an image-space Gaussian function) as (unknown) parameters of the forward evaluation process so that they do not need to be calibrated.
 Our parameter inference framework presented in \S\ref{sec:summary_func} and \S\ref{sec:bayesian} is not limited to this specific setup.
 
-%We use real-world units (centimeters) for all relevant parameters; this ensures that the resulting materials have physical proportions. We model the light intensity as an unknown, thus we do not require any calibration procedures. Finally, we observed that the vignetting from the cell phone camera has an impact on the results. While we could post-process the images to counter the effect, we find it easier and more appropriate within our framework to simply model the vignetting as a broad Gaussian, whose standard deviation becomes yet another parameter. Photographs are taken with an iPhone~7. For some materials, overexposure is unavoidable; we simply let overly bright areas clamp, and apply the same clamping to our forward simulation.
-
-All the procedural material models we used, which will be detailed in \S\ref{ssec:proc_models}, are implemented using \textsf{PyTorch} which %using array-level operations; this
-automatically provides GPU acceleration and computes derivatives through backpropagation. %and lets us express fairly complex operations, including microfacet BRDF evaluation, fast Fourier transforms, texture queries, color operations, and more.
-%The GPU we use is an Nvidia GTX 1080.
+All the procedural material models we used, which will be detailed in \S\ref{ssec:proc_models}, are implemented using \textsf{PyTorch} which automatically provides GPU acceleration and computes derivatives through backpropagation. 
 For all material parameter inference tasks, our forward evaluation generates $512 \times 512$ images.
 Notice that the recovered parameters can then be used to generate results with much higher resolution because the procedural models are generally resolution-independent.
-%The results are visualized at higher resolutions, since the procedural materials allow for resolution independence; there is no requirement to use the resolution used for parameter estimation also in final rendering.
 
 \subsection{Similarity Relations in Translucency}
 
@@ -40,15 +32,14 @@ Specifically, two sets of parameters $(\sigma_s, \sigma_a, g)$ and $(\sigma_s^*,
 where $\sigma_a$ and $\sigma_s$ are, respectively, the absorption and scattering coefficients, and $g$ is the first Legendre moment of the phase function.
 We show in Figure~\ref{fig:scatter} that applying our Bayesian inference method to $\sigma_s$ and $g$ (with fixed $\sigma_a$) computes a posterior distribution that agrees well with the predicted similarity relation~\eqref{eq:similarity_rel}.
 
-\input{result_synthetic}
-\input{result_real}
-\input{tab_perf}
+\input{tex/fig/fig_synthetic}
+\input{tex/fig/fig_real}
+\input{tex/fig/tab_perf}
 
 \subsection{Procedural Material Models}
 \label{ssec:proc_models}
 %
 We show results generated using synthetic images in Figures~\ref{fig:synth} and \ref{fig:discrete} as well as real photographs (taken with different cameras) in Figure~\ref{fig:real}.
-%The captions of the figures provide more detail.
 Please see the supplemental material for more results, including animations illustrating point estimations and sampling. Below we describe the six procedural models tested. Please refer to the supplement for additional detail and a \textsf{PyTorch} implementation. For each parameter, we define a reasonable truncated Gaussian distribution as its prior (also see supplement). In most cases, the MCMC sampling starts from the peak of the prior. In some examples (e.g wood), we first run posterior maximization and then switch to sampling from the optimized point. We drop some number (typically 200 to 1000) of initial MCMC samples due to burn-in.
 
 \paragraph*{Bumpy microfacet surface.}
@@ -57,7 +48,6 @@ This model depicts an opaque dielectric surface with an isotropic noise heightfi
 The bumpy heightfield is constructed using an inverse Fourier process including: (i)~choosing a power spectrum in the continuous Fourier domain; (ii)~discretizing it onto a grid of complex numbers; (iii)~randomly choosing the phase of each texel on the grid (while keeping the chosen amplitude); and (iv)~applying an inverse fast Fourier transform whose
 real component becomes the resulting heightfield.
 At render time, we use the normal map derived from this heightfield.
-%The normal map can be computed from the heightfield (finite differences work well).
 
 \paragraph*{Leather and plaster.}
 These materials can be modeled similarly as the aforementioned bumpy surfaces except for the computation of the heightfield and roughness.
@@ -72,7 +62,7 @@ In Figure~\ref{fig:discrete}, we show a few example samples drawn from the poste
 
 \paragraph*{Wood.} We \revision{also} created a partial \textsf{PyTorch} implementation of the comprehensive 3D wood model of Liu et al.~\cite{Liu2016}. This material is a 3D model of the growth rings of a tree, with a number of parameters controlling colors and widths of growth rings, as well as global distortions and small-scale noise features. The 3D wood is finally projected by a cutting plane to image space, defining diffuse albedo, roughness and height.
 
-\input{result_mismatch}
+\input{tex/fig/fig_mismatch}
 
 \paragraph*{Mismatched models.}
 Lastly, we demonstrate in Figure \ref{fig:Mismatch} the impact of forward procedural models.
@@ -80,16 +70,16 @@ Since these model-generating procedures are essentially material-specific priors
 
 \subsection{Additional Comparisons}
 
-\input{result_aittala}
+\input{tex/fig/fig_aittala}
 
 \paragraph*{Comparison to Aittala et al.}
 We first compare our technique to with one introduced by Aittala~et~al.~\cite{Aittala2016} in Figure \ref{fig:Aittala} using input photos published as supplemental materials from their work.
 Their work uses the same VGG-based loss (summary function), but optimizes directly in texture space. Both methods manage to reproduce the overall pattern and reflectance of the input photos.
 Thanks to the underlying procedural models, our method is able to synthesize larger results without visually obvious periodic patterns, and with more plausible global variation.
 
-\input{result_hu}
-\input{result_plot}
-\input{result_des}
+\input{tex/fig/fig_hu}
+\input{tex/fig/fig_plot}
+\input{tex/fig/fig_des}
 
 \paragraph*{Comparison to neural methods.}
 We also compare our method with the forward neural prediction method of Hu et al. \cite{Hu2019}. Their method uses an AlexNet network structure \cite{krizhevsky2012imagenet}, mapping an image of a material sample to the parameters of an appropriate procedural model. We apply their network structure with our BRDFs and lighting conditions, as their original implementation assumes Lambertian materials and outdoor sun/sky lighting. We show the results in Figure \ref{fig:Hu}. In general, we find the method gives moderately accurate results, which moreover tends to become worse for more complex BRDF models and with more parameters. The photo (top) is better matched by our MCMC sampling results (middle) than their prediction (bottom),

@@ -1,12 +1,6 @@
 \section{Bayesian Inference of Material Parameters}
 \label{sec:bayesian}
 %
-% It is often not possible to unambiguously determine the full parameter vector $\btheta$ from a single target image $\target$. Instead, there will commonly be a region of the parameter space that gives rise to images plausibly matching the target. This may also be due to over-completeness of the parameter space (different settings achieve same look).
-
-% Using classical non-linear optimization can often give a good point estimate, matching the target image summary with low error. However, other estimates may also offer good matches to the target, either because the summary function is not powerful enough to distinguish them, or because the difference only shows up under other viewing or lighting conditions. A typical example is the mean scattering angle of the phase function, which is often hard to estimate from a single view; later we will show this and other examples of the similarity structures.
-
-% We pose our problem in a Bayesian inference framework, capable of sampling the space of possible material parameters (the posterior distribution) using Markov chain Monte Carlo (MCMC) methods. This allows a user to both visually inspect the shape of the parameter space (or its low-dimensional embeddings), as well as click on specific samples and judge the appearance of the result.
-
 In what follows, we first describe a Bayesian formulation of the estimation problem in terms of a posterior distribution. Next, we discuss how to use the posterior for point estimation in a maximum a-posteriori (MAP) framework, and how the Markov-Chain Monte Carlo (MCMC) methods for Bayesian inference extend the point estimate approach by sampling from the posterior.
 
 
@@ -42,7 +36,7 @@ For numerical stability, we compute the negative log posterior, viz. $-\log p(\b
 
 A point estimate of the parameter vector can be modeled in the maximum a-posteriori (MAP) framework. We simply estimate the desired parameter values $\btheta$ as the maximum of the posterior pdf $p(\btheta | \target, \bz)$ given by Eq.~\eqref{eq:posterior}. For continuous $\btheta$, this problem can be solved using standard non-linear optimization algorithms. In the presence of discrete parameters, there is no single accepted solution. While various heuristics could be used, our sampling approach described below provides a cleaner solution to discrete parameter estimation.
 
-\input{alg_sample}
+\input{tex/fig/alg_sample}
 
 \subsection{Markov-Chain Monte Carlo Sampling of the Posterior}
 \label{ssec:bayesian}
@@ -58,6 +52,3 @@ For the former case, we utilize the gradient of the log pdf with respect to $\bt
 Our implementation uses MALA for this process, although HMC could also work.
 For the latter case, we obtain a new proposal $\btheta_d'$ of the discrete parameters, currently by uniformly sampling their joint probability mass function (Line~\ref{alg:line:mhSample}).
 Upon obtaining a full proposal, we use the standard Metropolis-Hasting rule (Line~\ref{alg:line:mhAccRej}) to stochastically select the new sample $(\btheta_c^{(t + 1)}, \btheta_d^{(t + 1)})$ by either accepting the newly proposed $(\btheta_c', \btheta_d')$ or (rejecting the proposal and) keeping the previous sample $(\btheta_c^{(t)}, \btheta_d^{(t)})$.
-
-% \sz{The following paragraph seems a bit redundant. If we choose to keep it, we will need to discuss MH, HMC, and MALA.}
-% Technically, HMC is similar to other Markov chain methods such as Metropolis-Hastings but is much more efficient for posterior sampling problems in cases where the derivatives of the model are available (always true in our case, as all our forward evaluators are implemented in PyTorch).
