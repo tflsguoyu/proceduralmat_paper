@@ -1,0 +1,12 @@
+\section{Conclusion}
+\label{sec:conclusion}
+%
+%We have introduced a differentiable Bayesian framework for parameter estimation of procedural material models demonstrating various phenomena and optical properties. Procedurals have been gaining significant traction in the industry, because they can cover large areas without repetition, and are easily editable.
+%We introduced a differentiable forward evaluator, implemented using PyTorch. We proposed several \emph{summary functions}, enabling us to compare a synthetic simulation image to a target image (photo) effectively, by comparing their summary vectors. We have shown that a neural summary function \cite{Gatys2015,Aittala2016} works well in the procedural material setting, and generally outperforms classical summary functions.
+%
+Procedural material models have become increasingly more popular in the industry, thanks to their flexibility, compactness, as well as easy editability.
+In this paper, we introduced a new computational framework to solve the inverse problem: the inference of procedural model parameters based on a single input image.
+
+The first major ingredient to our technique is a family of \emph{summary functions}, from hand-crafted to neural-network based~\cite{Gatys2015,Aittala2016}, that enable robust calculation of image differences (without requiring pixel-level alignments). The second ingredient is a \emph{Bayesian inference method} that leverages Hamiltonian Monte Carlo (HMC) to sample posterior distributions of procedural material parameters.  This technique provides users additional information beyond single point estimates and, to our knowledge, has previously not been applied to inverse-rendering problems.
+
+In the future, we would like to increase the complexity of the models supported even further, to handle materials like woven fabrics, transmissive BTDFs, and more.

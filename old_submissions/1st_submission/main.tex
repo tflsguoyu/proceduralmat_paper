@@ -1,0 +1,161 @@
+\documentclass[acmtog, anonymous, review]{acmart}
+\acmSubmissionID{228}
+
+\usepackage{booktabs} % For formal tables
+\usepackage{amssymb}
+\usepackage{graphicx}
+\graphicspath{{/home/guoyu/Dropbox/Bayesian_appearance/}{/home/milos/Dropbox/Bayesian_appearance/}{/Users/shuangz/Dropbox/Bayesian_appearance/}}
+\usepackage{xspace}
+\usepackage{paralist}
+\usepackage{bm}       %provides boldmath symbols via \bm command
+\usepackage{accents}
+\usepackage{relsize}      %provides easy changing of text size including in mathmode
+% \usepackage{subfigure}
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage{overpic}
+\usepackage{makecell}
+\usepackage{multirow}
+\usepackage{float}
+
+
+% Copyright
+% \setcopyright{none}
+%\setcopyright{acmcopyright}
+%\setcopyright{acmlicensed}
+%\setcopyright{rightsretained}
+%\setcopyright{usgov}
+%\setcopyright{usgovmixed}
+%\setcopyright{cagov}
+%\setcopyright{cagovmixed}
+
+
+% DOI
+% \acmDOI{10.475/123_4}
+
+% ISBN
+% \acmISBN{123-4567-24-567/08/06}
+
+% Conference
+\acmConference[SIGGRAPH 2019]{SIGGRAPH 2019}{July 2019}{Los Angeles}
+\acmYear{2019}
+\copyrightyear{2019}
+
+% \acmPrice{15.00}
+
+\citestyle{acmauthoryear}
+\setcitestyle{square}
+
+\input{macros}
+
+%Fix for error when hyperreferences get split across a page boundary
+%\hypersetup{draft}
+
+% Alter some LaTeX defaults for better treatment of figures:
+% See p.105 of "TeX Unbound" for suggested values.
+% See pp. 199-200 of Lamport's "LaTeX" book for details.
+%   General parameters, for ALL pages:
+\renewcommand{\topfraction}{0.9}	% max fraction of floats at top
+\renewcommand{\bottomfraction}{0.8}	% max fraction of floats at bottom
+%   Parameters for TEXT pages (not float pages):
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}     % 2 may work better
+\setcounter{dbltopnumber}{2}    % for 2-column pages
+\renewcommand{\dbltopfraction}{0.99}	% fit big float above 2-col. text
+\renewcommand{\textfraction}{0.01}	% allow minimal text w. figs
+%   Parameters for FLOAT pages (not text pages):
+\renewcommand{\floatpagefraction}{0.7}	% require fuller float pages
+% N.B.: floatpagefraction MUST be less than topfraction !!
+\renewcommand{\dblfloatpagefraction}{0.7}	% require fuller float pages
+
+
+\begin{document}
+\setcopyright{acmlicensed}
+\acmJournal{TOG}
+\acmYear{2019}\acmVolume{37}\acmNumber{4}\acmArticle{75}\acmMonth{8} \acmDOI{10.1145/xxxxxxx.xxxxxxx}
+
+\title{A Bayesian Inference Framework for Material Parameter Estimation}
+% \titlenote{Produces the permission block, and copyright information}
+%\subtitle{Extended Abstract}
+% \subtitlenote{The full version of the author's guide is available as \texttt{acmart.pdf} document}
+
+
+%\author{Yu Guo}
+%\affiliation{%
+%  %\department{Department of Computer Science}
+%  \institution{University of California, Irvine}}
+%\email{guo.yu@uci.edu}
+%
+%\author{Ling-Qi Yan}
+%\affiliation{%
+%  \institution{University of California, Santa Barbara}
+%}
+%\email{lingqi@berkeley.edu}
+%
+%\author{Milo\v s Ha\v san}
+%\affiliation{%
+%  \institution{Adobe}
+%}
+%\email{milos.hasan@gmail.com}
+%
+%\author{Shuang Zhao}
+%\affiliation{%
+%  \institution{University of California, Irvine}}
+%\email{shz@ics.uci.edu}
+
+% % The default list of authors is too long for headers}
+% \renewcommand{\shortauthors}{B. Trovato et al.}
+
+
+\begin{abstract}
+\input{abstract}
+\end{abstract}
+
+%CCS
+\begin{CCSXML}
+<ccs2012>
+<concept>
+<concept_id>10010147.10010371.10010372</concept_id>
+<concept_desc>Computing methodologies~Rendering</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+% <concept>
+% <concept_id>10010147.10010371.10010372.10010374</concept_id>
+% <concept_desc>Computing methodologies~Ray tracing</concept_desc>
+% <concept_significance>500</concept_significance>
+% </concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Computing methodologies~Rendering}
+% \ccsdesc[500]{Computing methodologies~Ray tracing}
+
+
+\setcopyright{acmlicensed}
+\acmJournal{TOG}
+\acmYear{2019}\acmVolume{37}\acmNumber{4}\acmArticle{75}\acmMonth{8} \acmDOI{10.1145/xxxxxxx.xxxxxxx}
+
+\keywords{material appearance, Bayesian inference, inverse problems}
+
+
+\input{teaser.tex}
+%
+\maketitle
+%
+\input{intro}
+\input{related}
+\input{framework}
+\input{summary}
+\input{param}
+\input{result}
+\input{conclusion}
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{references}
+
+%\input{appendix}
+%\input{supplemental}
+
+
+\end{document}

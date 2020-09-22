@@ -1,0 +1,52 @@
+\section{Material Models and Results}
+\label{sec:results}
+%
+%we present specific material models and parameter estimation results using our Bayesian inference framework with summary functions.
+We now demonstrate the effectiveness of our technique by fitting six procedural material models---bumpy microfacet surface, brushed metal, metallic paint with flakes, leather, plaster, and wood---to a mix of synthetic and real target images.
+We also show a translucent material in the supplementary material.
+
+Our forward evaluation process has the camera and light co-located.
+This configuration closely matches a mobile phone camera with flash (which is what we use to take the real target images) and simplifies some BRDF formulations (because the incoming, outgoing, and half-way vectors are all identical).
+Further, we assume that the distance between camera and sample is known as it is generally easy to measure or estimate.
+The knowledge of the camera field of view allows us to compute the physical scale of the resulting pixels.
+Lastly, we treat light intensity and vignetting (expressed as an image-space Gaussian function) as (unknown) parameters of the forward evaluation process so that they do not need to be calibrated.
+
+%We use real-world units (centimeters) for all relevant parameters; this ensures that the resulting materials have physical proportions. We model the light intensity as an unknown, thus we do not require any calibration procedures. Finally, we observed that the vignetting from the cell phone camera has an impact on the results. While we could post-process the images to counter the effect, we find it easier and more appropriate within our framework to simply model the vignetting as a broad Gaussian, whose standard deviation becomes yet another parameter. Photographs are taken with an iPhone~7. For some materials, overexposure is unavoidable; we simply let overly bright areas clamp, and apply the same clamping to our forward simulation.
+
+All the procedural material models we used, which will be detailed in \S\ref{ssec:proc_models}, are implemented using PyTorch which %using array-level operations; this 
+automatically provides GPU acceleration and computes derivatives through backpropagation. %and lets us express fairly complex operations, including microfacet BRDF evaluation, fast Fourier transforms, texture queries, color operations, and more. 
+%The GPU we use is an Nvidia GTX 1080. 
+For all material parameter inference tasks, our forward evaluation generates $256 \times 256$ images.
+Notice that the recovered parameters can then be used to generate results with much higher resolution because the procedural models are generally resolution-independent.
+%The results are visualized at higher resolutions, since the procedural materials allow for resolution independence; there is no requirement to use the resolution used for parameter estimation also in final rendering.
+
+We show results generated using six synthetic images in Figure~\ref{fig:synth} and four real photographs (taken with an iPhone~7) in Figure~\ref{fig:real}.
+%The captions of the figures provide more detail. 
+Please see the supplemental material for more results, including animations illustrating the optimization and sampling progress.
+
+\input{result_synthetic}
+\input{result_real}
+\input{tab_perf}
+
+\subsection{Procedural Material  Models}
+\label{ssec:proc_models}
+%
+We now describe six procedural models tested. Please refer to the supplement for their PyTorch implementation.
+
+\paragraph{Bumpy microfacet surface.}
+This model depicts an opaque dielectric surface with an isotropic noise heightfield. We use a standard microfacet BRDF with the GGX normal distribution~\cite{Walter2007} combined with a normal map computed from an explicitly constructed heightfield. We assume that the Fresnel reflectance at normal incidence can be computed from a known index of refraction (a value of 1.5 is a good estimate for plastics). We assume an unknown roughness $r$ (GGX parameter $\alpha=r^2$) and a Lambertian diffuse term with unknown albedo $\rho$. This model is identical to Wang et al.~\cite{Wang2011}, except using the GGX instead of Beckmann microfacet distribution. The main practical difference from the capture setup in that paper is that we use a point light, instead of step-edge illumination.
+
+The bumpy heightfield is constructed using an inverse Fourier process including: (i)~choosing a power spectrum in the continuous Fourier domain; (ii)~discretizing it onto a grid of complex numbers; (iii)~randomly choosing the phase of each texel on the grid (while keeping the chosen amplitude); and (iv)~applying an inverse fast Fourier transform whose 
+real component becomes the resulting heightfield. 
+At render time, we use the normal map derived from this heightfield.
+%The normal map can be computed from the heightfield (finite differences work well).
+
+\paragraph{Leather and plaster.}
+These materials can be modeled similarly as the aforementioned bumpy surfaces except for the computation of the heightfield and roughness.
+For plaster, a fractal noise texture is scaled (in space and intensity) and thresholded (controlled by additional parameters) to produce both the heightfield and a roughness variation texture. For leather, on the contrary, a Voronoi cell map is used to get the effect of leather-like cells (with parameters for scaling and thresholding), and additional small-scale fractal noise is added.
+
+\paragraph{Brushed metal.} The brushed metal material extends the above bumpy surface, by introducing anisotropy to both the GGX normal distribution and the noise heightfield used to compute the normal map, while dropping the diffuse term. We make both the BRDF and the Fourier-domain Gaussian power spectrum anisotropic. The parameters of the model thus include two roughnesses, as well as two Fourier-domain standard deviations.  We make the anisotropic highlight vertical and centered in the target image.
+
+\paragraph{Metallic flakes.} Metallic paint with flakes is a stochastic material with multiple BRDF lobes (caused by light reflecting off the flakes). Our model involves three components, each being an isotropic microfacet lobe, to describe top coating, flakes and glow, respectively. The top coating is usually highly specular, and we make its roughness a model parameter. We assume an index of refraction of 1.5, implying a Fresnel (Schlick) reflectivity at normal incidence of 0.04. The flakes are chosen as Voronoi cells of a random blue-noise point distribution; they have a roughness parameter and varying normals chosen from the Beckmann distribution with an unknown roughness, and with unknown Fresnel reflectivity. The scale of the cell map is itself a (differentiable) parameter. Lastly, the glow is a component approximating the internal scattering between the top interface and the flakes, and has its own roughness, Fresnel reflectivity and a flat normal. An extra weight parameter linearly combines the flakes and the glow.
+
+\paragraph{Wood.} Lastly, we created a partial PyTorch implementation of the comprehensive 3D wood model of Liu et al.~\cite{Liu2016}. This material is a 3D model of the growth rings of a tree, with a number of parameters controlling colors and widths of growth rings, as well as global distortions and small-scale noise features. We do not implement pores or anisotropic fiber highlights. The 3D wood is finally projected by a cutting plane to image space, defining diffuse albedo, roughness and height.

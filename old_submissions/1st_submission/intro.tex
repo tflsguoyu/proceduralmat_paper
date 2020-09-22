@@ -1,0 +1,17 @@
+\section{Introduction}
+
+Accurate modeling of the appearance of physical materials is one of the key areas of computer graphics, with applications to entertainment, product design and architecture visualization, among others. The challenges in this area come in roughly two categories: simulating the appearance of a material given its physical parameters (forward rendering) and estimating the parameters of a material from images (inverse rendering). Our work focuses on the inverse problem.
+
+In this paper, we explore the problem of estimating the parameters of various material models. Several recent methods make the assumption of using a simple BRDF model (a microfacet specular term, a diffuse term, and a varying normal vector), and estimate the parameters of this model separately per pixel. In contrast, we take a different approach of estimating a smaller number of \emph{global} material parameters, while considering a broader range of models that span a range of optical phenomena: from simple opaque bumpy dielectrics (e.g. plastics or wall paints), through anisotropic brushed metals and metallic paints, to scattering media (e.g. milk). These effects would not be possible with the simple microfacet-diffuse-normal BRDF model; moreover, our estimated materials can cover large areas without repetition, can be easily edited, and require minimal storage.
+
+Parameter estimation for such material models runs into two main challenges. First, the design of a suitable \emph{loss function} (metric) to compare a simulation image to a target. This cannot be handled by a simple image difference metric, because no pixel-wise alignment of the simulation and target can be assumed. The second challenge is the common presence of \emph{similarity structures} (areas of almost equally good fit) in the material parameter spaces; this can arise due to the limitations of capturing a single view of a material sample, due to the over-completeness of the material parameter space, etc.
+
+Our paper makes theoretical contributions in two main areas:
+\begin{itemize}
+	\item We introduce a framework where image \emph{summary functions} address the loss function design problem. A well-designed summary function can be applied to both the simulated and the target image, after which the L2-norm or similar simple metrics can be used to judge the error of a fit. We demonstrate a variety of summary functions, from very simple ones (means of fixed image regions), through higher order statistics, to Fourier transforms. %, to learned summary functions (embeddings) in the form of convolutional neural networks.
+	\item We address the problem of discovering similarity structures in parameter space by a Bayesian inference approach using Hamiltonian Monte Carlo sampling of the space of plausible material parameters, instead of finding just a point estimate of the parameter vector. This is a well-studied area within statistics, but to our knowledge has not yet been applied to material appearance.
+\end{itemize}
+
+We illustrate these concepts on several material models, only one of which (bumpy paint) could also be handled by the microfacet-diffuse-normal model. Our further examples (metallic paint, scattering liquid, brushed metal) have fairly different optical behavior and require their own differentiable forward simulation models and summary functions, while some also exhibiting distinctive similarity structures.
+
+

@@ -1,0 +1,46 @@
+\section{Preliminaries}
+\label{sec:prelim}
+
+\paragraph{Procedural model generation.}
+We focus on \emph{procedural material models} which utilize specialized operators to generate spatially varying surface reflectance profiles.
+Specifically, let $\btheta$ be the parameters taken by some procedural material generation process $f_0$.
+Then, $f_0(\btheta)$ generates the material properties (e.g., albedo, roughness, surface normals, anisotropy, scattering, etc.), in addition to any other parameters required by rendering (e.g. light parameters), which can in turn be converted into a rendered image $\synth$ via the standard rendering process $R$.
+This \emph{forward evaluation} process can be summarized as
+%
+\begin{equation}
+	\label{eq:forward}
+	\synth = R(f_0(\btheta)) = f(\btheta),
+\end{equation}
+%
+where $f$ is the composition of $R$ and $f_0$.
+
+When modeling real-world materials, it is desirable to capture naturally arising irregularities.
+In procedural modeling, this is usually achieved by making the model generation process $f_0$ to take extra random input $\bz$ (e.g., random seeds, pre-generated noise textures, etc.) that is then used to create the irregularities.
+This also causes the full forward evaluation to become $f(\btheta; \bz) := R(f_0(\btheta; \bz))$.
+
+\paragraph{Inverse problem specification.}
+We consider the problem of inferring procedural model parameters $\btheta$ given a target image $\target$  (which is typically a photograph of a material sample under known illumination).
+This, essentially, requires inverting $f$ in Eq.~\eqref{eq:forward}: $\btheta = f^{-1}(\target)$. Direct inversion of $f = R \circ f_0$ is intractable for any but the simplest material and rendering models.
+Instead, we aim to find $\btheta$ such that $\synth$ has similar appearance to $\target$:
+%
+\begin{equation}
+	\label{eq:approx}
+	\mbox{find} \ \btheta \ \mbox{s.t.} \ \target \approx f(\btheta; \bz),
+\end{equation}
+%
+for some (any) $\bz$, where $\approx$ is an \emph{appearance-match} relation that will be discussed in the next section.
+
+\begin{comment}
+Given a target image $\target$ of a material sample (typically a photograph under known illumination, such as flash), our goal is to estimate the vector of material parameters $\btheta$.
+
+To accomplish this, the first component we will need is a forward evaluator $f(\btheta, \bz)$ which (computationally) synthesize an image $\synth$. \sz{Don't we also need $f$ to be given?}
+Here we also consider a vector of random parameters $\bz$; these are essentially controlling the features of the image that have no impact on its ``perceived appearance'' but have significant impact on the numerical values of the pixels; for example, the random seeds of the noise functions used, affecting the placement of bumps or scratches. We will require the derivatives of $f$ with respect to $\btheta$ (but generally not $\bz$). \sz{The introduction of $\bz$ looks confusing. Should we simply make $f$ nondeterministic (i.e., a stochastic process)?}
+
+Our goal is to find $\btheta$ such that $\synth$ has similar appearance to $\target$, abstracting away from the randomness of $\bz$:
+%
+\begin{equation}
+\mbox{find} \ \btheta \ \mbox{s.t.} \ \target \approx f(\btheta, \bz),
+\end{equation}
+%
+where $\approx$ is a yet unspecified ``appearance match'' relationship.
+\end{comment}

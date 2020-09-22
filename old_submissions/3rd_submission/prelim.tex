@@ -1,0 +1,36 @@
+\section{Preliminaries}
+\label{sec:prelim}
+
+\paragraph*{Procedural model generation.}
+We focus on \emph{procedural material models} which utilize specialized %operators
+procedures (pieces of code) to generate spatially varying surface reflectance information.
+Specifically, let $\btheta$ be the parameters taken by some procedural material generation process $f_0$.
+Then, $f_0(\btheta)$ generates the material properties (e.g., albedo, roughness, surface normals, anisotropy, scattering, etc.), in addition to any other parameters required by rendering (e.g. light parameters), which can in turn be converted into a synthetic image $\synth$ via a rendering operator $R$.
+This \emph{forward evaluation} process can be summarized as
+%
+\begin{equation}
+	\label{eq:forward}
+	\synth = R(f_0(\btheta)) = f(\btheta),
+\end{equation}
+%
+where $f$ is the composition of $R$ and $f_0$.
+
+When modeling real-world materials, it is desirable to capture naturally arising irregularities.
+In procedural modeling, this is usually achieved by making the model generation process $f_0$ to take extra random input $\bz$ (e.g., random seeds, pre-generated noise textures, etc.) that is then used to create the irregularities.
+This also causes the full forward evaluation to become $f(\btheta; \bz) := R(f_0(\btheta; \bz))$.
+
+\paragraph*{Continuous and discrete parameters.}
+While most procedural material parameters tend to be continuous, discrete parameters can be useful for switching certain components on and off, or for choosing between several discrete noise types. We model this by splitting the parameter vector into continuous and discrete components, $\btheta = (\btheta_c, \btheta_d)$.
+We assume the forward evaluator $f$ to be differentiable with respect to $\btheta_c$ (but not $\btheta_d$ or the random input $\bz$).
+
+\paragraph*{Inverse problem specification.}
+We consider the problem of inferring procedural model parameters $\btheta$ given a target image $\target$  (which is typically a photograph of a material sample under known illumination).
+This, essentially, requires inverting $f$ in Eq.~\eqref{eq:forward}: $\btheta = f^{-1}(\target)$. Direct inversion of $f = R \circ f_0$ is intractable for any but the simplest material and rendering models.
+Instead, we aim to identify a collection of plausible values $\btheta$ such that $\synth$ has similar appearance to $\target$:
+%
+\begin{equation}
+	\label{eq:approx}
+	\mbox{find examples of } \ \btheta \ \mbox{s.t.} \ \target \approx f(\btheta; \bz),
+\end{equation}
+%
+for some (any) $\bz$, where $\approx$ is an \emph{appearance-match} relation that will be discussed in the next section.

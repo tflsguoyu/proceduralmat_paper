@@ -1,0 +1,9 @@
+\section{Conclusion}
+
+We have introduced a framework parameter estimation for globally parameterized material models with various optical properties (bumpy paint, metallic paint, scattering medium with Fresnel interface, brushed metal). For each of these, we introduced a differentiable forward evaluator, implemented using \torch.
+
+We proposed several \emph{summary functions}, enabling us to compare a synthetic simulation image to a target image (photo) effectively, by comparing their summary vectors; comparing them directly would not be feasible, as we cannot assume per-pixel match between the features.
+
+Finally, we introduced Bayesian inference through Hamiltonian Monte Carlo sampling of the posterior distribution of material parameters. This allows us to resolve \emph{similarity structures} (areas of almost equally good fit) in the material parameter spaces. This lets us handle models with a highly non-linear parameterization, obtaining good appearance matches from a single photograph.
+
+Because our material models are global instead of based on textures of per-pixel parameters, they can cover large areas without repetition, can be easily edited, and require minimal storage. In the future, we would like increase the complexity of the models supported even further, to handle materials like woven fabrics, transmissive BTDFs, and more.
