@@ -100,8 +100,8 @@
 		}
 	\\
 	{\parbox{\textwidth}{\centering
-		$^1$University of California, Irvine, USA\\
-		$^2$Adobe Research, USA\\
+		$^1$University of California, Irvine, USA \hspace{0.2in}
+		$^2$Adobe Research, USA \hspace{0.2in}
 		$^3$University of California, Santa Barbara, USA	
 		}
 	}
@@ -111,9 +111,9 @@
 % if the Editors-in-Chief have given you the data, you may uncomment
 % the following five lines and insert it here
 %
-\volume{39}   % the volume in which the issue will be published;
-\issue{7}     % the issue number of the publication
-\pStartPage{1}      % set starting page
+%\volume{39}   % the volume in which the issue will be published;
+%\issue{7}     % the issue number of the publication
+%\pStartPage{1}      % set starting page
 
 \input{macros}
 %-------------------------------------------------------------------------
@@ -130,24 +130,23 @@
 		% \CCScat{Computer Graphics}{I.3.3}{Picture/Image Generation}{Line and curve generation}
 		% \end{classification}
 		%-------------------------------------------------------------------------
-		%  ACM CCS 2012
-		% (see https://www.acm.org/publications/class-2012)
+		%  ACM CCS 2012 (see https://www.acm.org/publications/class-2012)
 		%The tool at \url{http://dl.acm.org/ccs.cfm} can be used to generate
 		% CCS codes.
-		%Example:
-		% \begin{CCSXML}
-		% 	<ccs2012>
-		% 	<concept>
-		% 	<concept_id>10010147.10010371.10010372.10010376</concept_id>
-		% 	<concept_desc>Computing methodologies~Reflectance modeling</concept_desc>
-		% 	<concept_significance>500</concept_significance>
-		% 	</concept>
-		% 	</ccs2012>
-		% \end{CCSXML}
-
-		% \ccsdesc[500]{Computing methodologies~Reflectance modeling}
-
-		% \printccsdesc
+		% Example:
+		\begin{CCSXML}
+			<ccs2012>
+			<concept>
+			<concept_id>10010147.10010371.10010372</concept_id>
+			<concept_desc>Computing methodologies~Rendering</concept_desc>
+			<concept_significance>500</concept_significance>
+			</concept>
+			</ccs2012>
+		\end{CCSXML}
+		
+		\ccsdesc[500]{Computing methodologies~Rendering}
+	
+		\printccsdesc 
 	\end{abstract}
 	%-------------------------------------------------------------------------
 	\input{intro}

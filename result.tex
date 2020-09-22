@@ -74,26 +74,18 @@ In Figure~\ref{fig:discrete}, we show a few example samples drawn from the poste
 
 \input{result_mismatch}
 
-\revision{
-	\paragraph*{Mismatched models.}
-	Lastly, we demonstrate in Figure \ref{fig:Mismatch} the impact of forward procedural models.
-	Since these model-generating procedures are essentially material-specific priors, using mismatched models generally leads to results that match overall image statistics but with incorrect patterns.
-}
+\paragraph*{Mismatched models.}
+Lastly, we demonstrate in Figure \ref{fig:Mismatch} the impact of forward procedural models.
+Since these model-generating procedures are essentially material-specific priors, using mismatched models generally leads to results that match overall image statistics but with incorrect patterns.
 
-
-%\subsection{Comparison to Neural Methods}
 \subsection{Additional Comparisons}
-%
-%\revision{In what follows, we demonstrate the practical usefulness of our technique by comparing to several previous methods.}
 
 \input{result_aittala}
 
-\revision{
-	\paragraph*{Comparison to Aittala et al.}
-	We first compare our technique to with one introduced by Aittala~et~al.~\cite{Aittala2016} in Figure \ref{fig:Aittala} using input photos published as supplemental materials from their work.
-	Their work uses the same VGG-based loss (summary function), but optimizes directly in texture space. Both methods manage to reproduce the overall pattern and reflectance of the input photos.
-	Thanks to the underlying procedural models, our method is able to synthesize larger results without visually obvious periodic patterns, and with more plausible global variation.
-}
+\paragraph*{Comparison to Aittala et al.}
+We first compare our technique to with one introduced by Aittala~et~al.~\cite{Aittala2016} in Figure \ref{fig:Aittala} using input photos published as supplemental materials from their work.
+Their work uses the same VGG-based loss (summary function), but optimizes directly in texture space. Both methods manage to reproduce the overall pattern and reflectance of the input photos.
+Thanks to the underlying procedural models, our method is able to synthesize larger results without visually obvious periodic patterns, and with more plausible global variation.
 
 \input{result_hu}
 \input{result_plot}
@@ -106,6 +98,4 @@ To some extent, the method of \cite{Hu2019} is orthogonal to ours, as it can be 
 
 Finally, we also compare to the single input SVBRDF estimation method of Deschaintre et al. \cite{Deschaintre2018} (See Figure \ref{fig:Des}). This method takes a $256 \times 256$ target image, and produces material maps at the same resolution, pixel-wise aligned to the input. This pixel-wise alignment is not achievable with our method (or any procedural material estimation method). However, the overall perceptual appearance match is usually worse than our method. In some cases, the method produces specular burn-in, as the strong highlight cannot be fully removed and causes holes in the resulting maps (Plaster-4, Metallicflake-4). Advanced BRDF models like brushed metal and metallic flakes are not explicitly handled by their method and usually fail. Finally, their result is fixed at the $256 \times 256$ resolution, and does not support higher resolutions, seamless tiling, nor editability; these benefits come from the use of a procedural model.
 
-\revision{
-	Figure~\ref{fig:Comp} shows a quantitative comparison of the Learned Perceptual Image Patch Similarity (LPIPS) metric~\cite{zhang2018unreasonable} between the captured photos and the re-renderings using different methods.
-}
+Figure~\ref{fig:Comp} shows a quantitative comparison of the Learned Perceptual Image Patch Similarity (LPIPS) metric~\cite{zhang2018unreasonable} between the captured photos and the re-renderings using different methods.
