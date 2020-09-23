@@ -27,7 +27,7 @@ To demonstrate the effectiveness of our framework, we fit procedural models for 
 % We implement the procedural generation and rendering processes as (differentiable) PyTorch procedures with the priors and summary functions (classical or neural) expressed in the same framework.
 
 \begin{figure*}[t]
-	\includegraphics[width=\textwidth]{img/posterior.pdf}
+	\includegraphics[width=\textwidth]{fig1-2/posterior.pdf}
 	\captionsetup{labelfont=bf,textfont=it}
 	\caption{Our posterior computation combines priors, a procedural material model, a rendering operator, a summary function, and a target image. This posterior distribution can then be sampled to provide plausible values of the parameter vector. The value of the posterior is computed up to a normalization term, which does not effect MCMC sampling. The entire posterior definition is differentiable in the material parameters (excluding optional discrete model parameters).}
 	\label{fig:posterior}
