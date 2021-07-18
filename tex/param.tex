@@ -36,7 +36,7 @@ For numerical stability, we compute the negative log posterior, viz. $-\log p(\b
 
 A point estimate of the parameter vector can be modeled in the maximum a-posteriori (MAP) framework. We simply estimate the desired parameter values $\btheta$ as the maximum of the posterior pdf $p(\btheta | \target, \bz)$ given by Eq.~\eqref{eq:posterior}. For continuous $\btheta$, this problem can be solved using standard non-linear optimization algorithms. In the presence of discrete parameters, there is no single accepted solution. While various heuristics could be used, our sampling approach described below provides a cleaner solution to discrete parameter estimation.
 
-\input{tex/fig/alg_sample}
+\input{tex/alg/sample}
 
 \subsection{Markov-Chain Monte Carlo Sampling of the Posterior}
 \label{ssec:bayesian}

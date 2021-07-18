@@ -1,7 +1,7 @@
 \section{Material Models and Results}
 \label{sec:results}
 %
-\input{tex/fig/fig_scatter}
+\input{tex/fig/scatter}
 
 We now demonstrate the effectiveness of our technique by fitting several procedural material models to a mix of synthetic and real target images.
 
@@ -32,10 +32,10 @@ Specifically, two sets of parameters $(\sigma_s, \sigma_a, g)$ and $(\sigma_s^*,
 where $\sigma_a$ and $\sigma_s$ are, respectively, the absorption and scattering coefficients, and $g$ is the first Legendre moment of the phase function.
 We show in Figure~\ref{fig:scatter} that applying our Bayesian inference method to $\sigma_s$ and $g$ (with fixed $\sigma_a$) computes a posterior distribution that agrees well with the predicted similarity relation~\eqref{eq:similarity_rel}.
 
-\input{tex/fig/fig_synthetic}
-\input{tex/fig/fig_synthetic_discrete}
-\input{tex/fig/fig_real}
-\input{tex/fig/tab_perf}
+\input{tex/fig/synthetic}
+\input{tex/fig/synthetic_discrete}
+\input{tex/fig/real}
+\input{tex/tab/performance}
 
 \subsection{Procedural Material Models}
 \label{ssec:proc_models}
@@ -63,7 +63,7 @@ In Figure~\ref{fig:discrete}, we show a few example samples drawn from the poste
 
 \paragraph*{Wood.} We \revision{also} created a partial \textsf{PyTorch} implementation of the comprehensive 3D wood model of Liu et al.~\cite{Liu2016}. This material is a 3D model of the growth rings of a tree, with a number of parameters controlling colors and widths of growth rings, as well as global distortions and small-scale noise features. The 3D wood is finally projected by a cutting plane to image space, defining diffuse albedo, roughness and height.
 
-\input{tex/fig/fig_mismatch}
+\input{tex/fig/mismatch}
 
 \paragraph*{Mismatched models.}
 Lastly, we demonstrate in Figure \ref{fig:Mismatch} the impact of forward procedural models.
@@ -71,16 +71,16 @@ Since these model-generating procedures are essentially material-specific priors
 
 \subsection{Additional Comparisons}
 
-\input{tex/fig/fig_aittala}
+\input{tex/fig/aittala}
 
 \paragraph*{Comparison to Aittala et al.}
 We first compare our technique to with one introduced by Aittala~et~al.~\cite{Aittala2016} in Figure \ref{fig:Aittala} using input photos published as supplemental materials from their work.
 Their work uses the same VGG-based loss (summary function), but optimizes directly in texture space. Both methods manage to reproduce the overall pattern and reflectance of the input photos.
 Thanks to the underlying procedural models, our method is able to synthesize larger results without visually obvious periodic patterns, and with more plausible global variation.
 
-\input{tex/fig/fig_hu}
-\input{tex/fig/fig_plot}
-\input{tex/fig/fig_des}
+\input{tex/fig/hu}
+\input{tex/fig/plot}
+\input{tex/fig/des}
 
 \paragraph*{Comparison to neural methods.}
 We also compare our method with the forward neural prediction method of Hu et al. \cite{Hu2019}. Their method uses an AlexNet network structure \cite{krizhevsky2012imagenet}, mapping an image of a material sample to the parameters of an appropriate procedural model. We apply their network structure with our BRDFs and lighting conditions, as their original implementation assumes Lambertian materials and outdoor sun/sky lighting. We show the results in Figure \ref{fig:Hu}. In general, we find the method gives moderately accurate results, which moreover tends to become worse for more complex BRDF models and with more parameters. The photo (top) is better matched by our MCMC sampling results (middle) than their prediction (bottom),

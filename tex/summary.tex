@@ -6,20 +6,7 @@ Unfortunately, we cannot use simplistic image difference metrics such as the L2 
 This is because the features (bumps, scratches, flakes, yarns, etc.) in the images of real-world materials are generally misaligned, even when the two images represent the same material.
 In procedural modeling, as shown in Figure \ref{fig:syn1}, with irregularities created differently using $\bz_1$ and $\bz_2$, the same procedural model parameters $\btheta$ can yield slightly different results $f(\btheta; \bz_1)$ and $f(\btheta, \bz_2)$.
 
-\begin{figure}[t]
-	\addtolength{\tabcolsep}{-5pt}
-	\begin{tabular}{cccc}
-		\includegraphics[width=0.24\columnwidth]{fig3/bump04rd1.jpg} &
-		\includegraphics[width=0.24\columnwidth]{fig3/bump04rd2.jpg} &
-		\includegraphics[width=0.24\columnwidth]{fig3/bump02rd1.jpg} &
-		\includegraphics[width=0.24\columnwidth]{fig3/bump02rd2.jpg} \\
-		(a1) & (a2) & (b1) & (b2)
-	\end{tabular}
-	\captionsetup{labelfont=bf,textfont=it}
-	\caption{\label{fig:syn1}
-		Each pair of images among (a, b) are generated using identical model parameters $\btheta$ but different irregularities $\bz$. The pixel-wise L2 norm of the difference between these image pairs is large and not useful for estimating model parameters.
-	}
-\end{figure}
+\input{tex/fig/sum_func}
 
 To overcome this challenge, we use the concept of a \emph{summary function}, which abstracts away the unimportant differences in the placement of the features, and summarizes the predicted and target images into smaller vectors whose similarity can be judged with simple metrics like L2 distance.
 
